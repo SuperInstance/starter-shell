@@ -26,7 +26,7 @@ def main():
         if hw.get('gpu'): print(f"   GPU: {hw['gpu']['info']}")
     elif args[0] in ("agent", "--agent"):
         from agent import Agent
-        agent = Agent("starter")
+        agent = Agent("starter", plato_url=os.environ.get("PLATO_URL"))
         rooms = ["forge", "fleet_health", "vessel-room-navigator"]
         agent.run(rooms)
     elif args[0] in ("modules", "--modules"):
