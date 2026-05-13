@@ -6,7 +6,7 @@ and provides the agent interface.
 """
 import json, urllib.request, os, sys
 
-PLATO_URL = os.environ.get("PLATO_URL", "http://localhost:8847")
+PLATO_URL = os.environ.get("PLATO_URL", "https://plato.purplepincher.org")
 SHELL_NAME = os.environ.get("SHELL_NAME", "starter-shell")
 
 class PlatoClient:
