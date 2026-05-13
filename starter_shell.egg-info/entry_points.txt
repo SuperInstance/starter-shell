@@ -1,0 +1,3 @@
+[console_scripts]
+shell = shell.cli:main
+starter-shell = shell.cli:main

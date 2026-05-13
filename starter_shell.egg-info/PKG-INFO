@@ -1,3 +1,20 @@
+Metadata-Version: 2.4
+Name: starter-shell
+Version: 0.1.1
+Summary: A starting shell for any application. Adapts to your hardware.
+Home-page: https://github.com/SuperInstance/starter-shell
+Author: SuperInstance
+Classifier: License :: OSI Approved :: Apache Software License
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+Dynamic: author
+Dynamic: classifier
+Dynamic: description
+Dynamic: description-content-type
+Dynamic: home-page
+Dynamic: requires-python
+Dynamic: summary
+
 # 🔮 Starter Shell
 
 A starting shell for any application. Clone it, run it, and it adapts to your hardware — discovers compilers, connects to the fleet's knowledge graph (PLATO), creates rooms, files tiles, and runs the agent loop.
@@ -152,21 +169,9 @@ hw = detect()
 
 ---
 
-## Install (30 seconds)
+## Onboarding
 
 ```bash
-# One line — installs and runs onboarding
-curl -fsSL https://superinstance.github.io/starter-shell/install.sh | sh
-
-# Or via pip
-pip install starter-shell
-starter-shell
-
-# Or via cargo
-cargo install starter-shell
-starter-shell
-
-# Or from source
 git clone https://github.com/SuperInstance/starter-shell.git
 cd starter-shell
 python3 onboarding.py
