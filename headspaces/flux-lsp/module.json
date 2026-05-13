@@ -1,0 +1,21 @@
+{
+  "name": "flux-lsp",
+  "version": "0.1.0",
+  "desc": "Language Server Protocol for FLUX ISA v1.0/v3.0 — syntax highlighting, auto-completion, hover docs, go-to-definition, diagnostics for .fluxasm files",
+  "depends": ["node >=18"],
+  "install": {
+    "npm": "typescript @types/node"
+  },
+  "env": {
+    "FLUX_LSP_PORT": {"default": "5100", "desc": "LSP server port"},
+    "FLUX_LSP_PATH": {"default": "/tmp/flux-lsp", "desc": "Path to flux-lsp repo"}
+  },
+  "capabilities": [
+    "lsp-server",
+    "completion",
+    "hover",
+    "definition",
+    "diagnostics",
+    "document-symbol"
+  ]
+}
