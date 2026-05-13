@@ -1,0 +1,11 @@
+{
+  "name": "fleet-scribe",
+  "version": "0.1.0",
+  "desc": "One Delta detection — only compute when the gradient changes",
+  "repo": "https://github.com/SuperInstance/fleet-scribe",
+  "tags": ["delta", "caching", "automation"],
+  "install": [
+    {"type": "pip", "target": "fleet-scribe"}
+  ],
+  "depends": []
+}

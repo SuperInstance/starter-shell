@@ -1,0 +1,8 @@
+{
+  "name": "gh-dungeon",
+  "version": "0.1.0",
+  "desc": "PLATO-powered dungeon crawler — gh CLI extension",
+  "repo": "https://github.com/SuperInstance/gh-dungeons",
+  "tags": ["game", "dungeon", "gh-extension"],
+  "install": []
+}

@@ -1,0 +1,11 @@
+{
+  "name": "holonomy",
+  "version": "0.1.0",
+  "desc": "GL(9) zero-holonomy consensus — cycle-based trust verification",
+  "repo": "https://github.com/SuperInstance/holonomy-consensus",
+  "tags": ["consensus", "trust", "mathematics"],
+  "install": [
+    {"type": "git", "target": "holonomy", "url": "https://github.com/SuperInstance/holonomy-consensus.git"}
+  ],
+  "depends": []
+}

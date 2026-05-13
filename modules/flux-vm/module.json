@@ -1,0 +1,11 @@
+{
+  "name": "flux-vm",
+  "version": "0.1.0",
+  "desc": "Constraint verification VM — 50-opcode stack machine, bounded execution",
+  "repo": "https://github.com/SuperInstance/flux-vm",
+  "tags": ["vm", "constraint", "verification"],
+  "install": [
+    {"type": "git", "target": "flux-vm", "url": "https://github.com/SuperInstance/flux-vm.git"}
+  ],
+  "depends": []
+}

@@ -1,0 +1,12 @@
+{
+  "name": "keel",
+  "version": "0.1.0",
+  "desc": "Fleet management CLI — init, status, bear, field, probe, prune, refit, launch, sync",
+  "repo": "https://github.com/SuperInstance/keel",
+  "tags": ["cli", "fleet", "management"],
+  "install": [
+    {"type": "cargo", "target": "superinstance-keel"},
+    {"type": "git", "target": "keel", "url": "https://github.com/SuperInstance/keel.git"}
+  ],
+  "depends": []
+}

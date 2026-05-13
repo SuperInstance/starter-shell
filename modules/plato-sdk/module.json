@@ -1,0 +1,11 @@
+{
+  "name": "plato-sdk",
+  "version": "0.1.0",
+  "desc": "PLATO knowledge graph SDK — file tiles, search rooms, build agents",
+  "repo": "https://github.com/SuperInstance/plato-sdk",
+  "tags": ["knowledge", "sdk", "tiles"],
+  "install": [
+    {"type": "pip", "target": "plato-sdk"}
+  ],
+  "depends": []
+}

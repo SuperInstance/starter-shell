@@ -63,7 +63,34 @@ This works for code (which compiler is fastest?), knowledge (which tile answers 
 
 ---
 
-## The Fleet
+## Modular Expansion
+
+The starter shell is the kernel. Everything else is a module you add when you need it.
+
+```bash
+python3 modules.py list           # See available modules
+python3 modules.py install keel   # Install fleet CLI
+python3 modules.py install plato-sdk  # Install PLATO SDK
+python3 modules.py install vessel # Install 3D room viewer
+```
+
+Each module is self-contained. Install what you need. The shell grows with you.
+
+| Module | One-liner | Install |
+|--------|-----------|---------|
+| `keel` | Fleet management CLI (init, status, bear, field...) | `cargo install superinstance-keel` |
+| `plato-sdk` | PLATO knowledge graph client | `pip install plato-sdk` |
+| `vessel` | 3D room viewer (fishing boat demo) | `git clone` |
+| `forgemaster` | FLUX runtime (self-discovering compiler) | `git clone` |
+| `flux-vm` | Constraint verification VM (50 opcodes) | `git clone` |
+| `terrain` | MUD-to-visual bridge (text → 3D) | `git clone` |
+| `fleet-scribe` | One Delta detection (compute only changes) | `pip install fleet-scribe` |
+| `holonomy` | GL(9) zero-holonomy consensus | `git clone` |
+| `esp32-cam` | ESP32 camera agent firmware | (hardware) |
+| `gh-dungeon` | PLATO-powered dungeon crawler | `gh extension install` |
+| `gpu-vector` | GPU vector DB (CUDA/WebGPU/Vulkan) | (research) |
+
+
 
 The starter shell is the entry point. The rest of the fleet extends it:
 

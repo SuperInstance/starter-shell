@@ -1,0 +1,9 @@
+{
+  "name": "gpu-vector",
+  "version": "0.1.0",
+  "desc": "GPU vector database — CUDA, WebGPU, Vulkan, Metal, WASM backends",
+  "repo": "https://github.com/SuperInstance/vessel-room-navigator",
+  "tags": ["gpu", "vector", "search"],
+  "install": [],
+  "depends": []
+}

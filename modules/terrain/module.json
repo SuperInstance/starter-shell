@@ -1,0 +1,11 @@
+{
+  "name": "terrain",
+  "version": "0.1.0",
+  "desc": "MUD-to-visual bridge — text rooms to 3D scenes in Three.js",
+  "repo": "https://github.com/SuperInstance/terrain",
+  "tags": ["visualization", "mud", "3d"],
+  "install": [
+    {"type": "git", "target": "terrain", "url": "https://github.com/SuperInstance/terrain.git"}
+  ],
+  "depends": []
+}

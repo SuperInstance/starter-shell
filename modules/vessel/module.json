@@ -1,0 +1,11 @@
+{
+  "name": "vessel",
+  "version": "0.1.0",
+  "desc": "3D room viewer — walk a fishing boat, warp rooms, trigger alarms",
+  "repo": "https://github.com/SuperInstance/vessel-room-navigator",
+  "tags": ["visualization", "3d", "rooms"],
+  "install": [
+    {"type": "git", "target": "vessel", "url": "https://github.com/SuperInstance/vessel-room-navigator.git"}
+  ],
+  "depends": []
+}

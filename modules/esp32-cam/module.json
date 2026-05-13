@@ -1,0 +1,9 @@
+{
+  "name": "esp32-cam",
+  "version": "0.1.0",
+  "desc": "ESP32 camera agent — PTZ camera firmware, motion detection, MJPEG stream",
+  "repo": "https://github.com/SuperInstance/vessel-room-navigator",
+  "tags": ["hardware", "camera", "esp32"],
+  "install": [],
+  "depends": []
+}

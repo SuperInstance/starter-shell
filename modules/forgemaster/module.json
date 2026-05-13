@@ -1,0 +1,11 @@
+{
+  "name": "forgemaster",
+  "version": "0.1.0",
+  "desc": "FLUX runtime — self-discovering compiler, benchmarks every language",
+  "repo": "https://github.com/SuperInstance/forgemaster",
+  "tags": ["compiler", "benchmark", "constraint"],
+  "install": [
+    {"type": "git", "target": "forgemaster", "url": "https://github.com/SuperInstance/forgemaster.git"}
+  ],
+  "depends": []
+}
