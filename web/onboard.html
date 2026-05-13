@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Cocapn — Onboarding</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#050510;overflow:hidden;font-family:'SF Pro Display','Segoe UI',sans-serif;color:#fff;user-select:none}
+#c{position:fixed;inset:0}
+#hud{position:fixed;inset:0;pointer-events:none;z-index:10}
+#hud>*{pointer-events:auto}
+
+#step{position:fixed;top:20px;left:50%;transform:translateX(-50%);
+  background:rgba(5,5,16,.75);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.06);
+  padding:8px 20px;border-radius:10px;font-size:13px;display:flex;align-items:center;gap:10px}
+#step .dot{width:6px;height:6px;border-radius:50%;background:#69f0ae;box-shadow:0 0 6px rgba(105,240,174,.4)}
+
+#panel{position:fixed;bottom:0;left:50%;transform:translateX(-50%);
+  width:min(600px,90vw);background:rgba(5,5,16,.85);backdrop-filter:blur(20px);
+  border:1px solid rgba(255,255,255,.06);border-radius:12px 12px 0 0;padding:20px 24px;z-index:15}
+#panel h2{font-size:18px;margin-bottom:4px;display:flex;align-items:center;gap:8px}
+#panel .sub{font-size:12px;color:rgba(255,255,255,.4);margin-bottom:16px}
+#panel .form{display:flex;flex-direction:column;gap:8px}
+#panel input,#panel select{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);
+  color:#fff;padding:8px 12px;border-radius:6px;font-size:13px;outline:none}
+#panel input:focus{border-color:#64b4ff}
+#panel .opt{display:flex;gap:8px;flex-wrap:wrap}
+#panel .opt button{padding:6px 14px;border-radius:6px;background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.08);color:rgba(255,255,255,.6);cursor:pointer;font-size:11px}
+#panel .opt button.sel{background:rgba(100,180,255,.15);border-color:#64b4ff;color:#64b4ff}
+#panel .nav{display:flex;gap:8px;justify-content:space-between;margin-top:16px}
+#panel .nav button{padding:8px 20px;border-radius:6px;border:none;cursor:pointer;font-size:12px;font-weight:600}
+#panel .nav .next{background:#64b4ff;color:#fff}
+#panel .nav .prev{background:rgba(255,255,255,.06);color:rgba(255,255,255,.5)}
+#panel .nav .next:hover{background:#4a9ce0}
+
+#loading{position:fixed;inset:0;background:#050510;display:flex;
+  flex-direction:column;align-items:center;justify-content:center;z-index:100}
+#loading .sp{width:40px;height:40px;border:3px solid rgba(255,255,255,.05);
+  border-top-color:#64b4ff;border-radius:50%;animation:spin .8s linear infinite;margin-bottom:12px}
+@keyframes spin{to{transform:rotate(360deg)}}
+#loading.h{display:none}
+
+.modules{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.modules label{padding:6px 10px;border-radius:6px;background:rgba(255,255,255,.03);
+  border:1px solid rgba(255,255,255,.06);font-size:11px;cursor:pointer;display:flex;align-items:center;gap:6px}
+.modules label input{accent-color:#64b4ff}
+
+#output{background:rgba(0,0,0,.3);border-radius:6px;padding:12px;font-family:monospace;font-size:11px;line-height:1.6;max-height:120px;overflow-y:auto}
+</style>
+</head>
+<body>
+
+<div id="loading"><div class="sp"></div><p>Loading Onboarding...</p></div>
+<div id="c"></div>
+<div id="hud">
+  <div id="step"><div class="dot"></div><span id="step-name">Welcome</span></div>
+</div>
+<div id="panel">
+  <div id="panel-content"></div>
+</div>
+
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js"}}</script>
+<script type="module">
+import * as THREE from 'three';
+
+// ===== ONBOARDING STEPS =====
+const STEPS = [
+  { id: "welcome", name: "Welcome", room: "wheelhouse",
+    desc: "Name your project. This becomes your shell.",
+    render: (p) => { p.innerHTML = `
+      <h2>🔮 Name Your Shell</h2>
+      <div class="sub">A shell is a git repository. An agent crawls in, improves it, leaves it better.</div>
+      <div class="form">
+        <input id="shell-name" placeholder="my-project" value="my-project">
+        <input id="user-name" placeholder="Your name" value="${localStorage.getItem('user')||''}">
+      </div>
+    `}
+  },
+  { id: "hardware", name: "Hardware", room: "engine_room",
+    desc: "What do you want the shell to know about this machine?",
+    render: (p) => { p.innerHTML = `
+      <h2>⚙️ Hardware Profile</h2>
+      <div class="sub">The shell adapts to whatever machine it lands on.</div>
+      <div class="form">
+        <select id="hw-profile">
+          <option value="auto">Auto-detect (recommended)</option>
+          <option value="server">Server / Cloud (24GB+, many cores)</option>
+          <option value="desktop">Desktop/Laptop (8-16GB, GPU)</option>
+          <option value="edge">Edge / Raspberry Pi (2-4GB, ARM)</option>
+          <option value="embed">Embedded / ESP32 (tiny, no OS)</option>
+        </select>
+      </div>
+    `}
+  },
+  { id: "modules", name: "Modules", room: "galley",
+    desc: "Install the modules you need. Add more later.",
+    render: (p) => {
+      const mods = ["keel","plato-sdk","vessel","forgemaster","flux-vm","terrain","fleet-scribe","holonomy"];
+      p.innerHTML = `<h2>🧩 Install Modules</h2><div class="sub">Each module adds capabilities. Install what you need now, more later.</div>
+      <div class="modules">${mods.map(m => `<label><input type="checkbox" checked> ${m}</label>`).join('')}</div>`;
+    }
+  },
+  { id: "connect", name: "Connect", room: "crow_nest",
+    desc: "Connect the shell to your services.",
+    render: (p) => { p.innerHTML = `
+      <h2>🔗 Connect Services</h2>
+      <div class="sub">Optional — skip now, configure later via headspaces/</div>
+      <div class="form">
+        <input id="plato-url" placeholder="PLATO URL" value="http://localhost:8847">
+        <input id="telegram-token" placeholder="Telegram bot token (optional)">
+        <input id="discord-token" placeholder="Discord bot token (optional)">
+      </div>
+    `}
+  },
+  { id: "review", name: "Review & Go", room: "wheelhouse_roof",
+    desc: "Your shell is configured. Download or copy the commands.",
+    render: (p) => {
+      const name = document.getElementById('shell-name')?.value || 'my-project';
+      const commands = [
+        `# ${name} — Starter Shell`,
+        `git clone https://github.com/SuperInstance/starter-shell.git ${name}`,
+        `cd ${name}`,
+        `python3 onboarding.py`,
+        `python3 agent.py`,
+        `python3 modules.py list`
+      ].join('\n');
+      p.innerHTML = `
+        <h2>🚀 Your Shell is Ready</h2>
+        <div class="sub">Clone the starter shell and run these commands:</div>
+        <div class="form">
+          <pre id="output">${commands}</pre>
+          <div class="nav" style="justify-content:center">
+            <button class="next" onclick="navigator.clipboard.writeText(document.getElementById('output').textContent)">
+              📋 Copy Commands
+            </button>
+          </div>
+        </div>
+      `;
+    }
+  }
+];
+
+let currentStep = 0;
+const roomTextures = {};
+
+// Init Three.js
+const scene = new THREE.Scene();
+const cam = new THREE.PerspectiveCamera(75, innerWidth/innerHeight, .1, 200);
+cam.position.set(0,4,0);
+const renderer = new THREE.WebGLRenderer({antialias:true});
+renderer.setPixelRatio(Math.min(devicePixelRatio,2));
+renderer.setSize(innerWidth,innerHeight);
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+document.getElementById('c').appendChild(renderer.domElement);
+
+let sphere = null;
+const tl = new THREE.TextureLoader();
+const texCache = {};
+
+async function loadTex(name) {
+  if (texCache[name]) return texCache[name];
+  return new Promise(r => tl.load(`https://fleet.cocapn.ai/textures/pano_${name}.jpg`,
+    t => { t.colorSpace = THREE.SRGBColorSpace; texCache[name]=t; r(t); },
+    undefined, () => r(null)));
+}
+
+async function showRoom(roomName) {
+  if (sphere) { scene.remove(sphere); sphere.geometry.dispose(); sphere.material.dispose(); sphere=null; }
+  const tex = await loadTex(roomName);
+  if (!tex) return;
+  const g = new THREE.SphereGeometry(50,64,64); g.scale(-1,1,1);
+  const m = new THREE.MeshBasicMaterial({map: tex, side: THREE.BackSide});
+  sphere = new THREE.Mesh(g,m); scene.add(sphere);
+}
+
+function renderStep(idx) {
+  const step = STEPS[idx];
+  document.getElementById('step-name').textContent = `Step ${idx+1}: ${step.name}`;
+  const panel = document.getElementById('panel-content');
+  step.render(panel);
+  
+  // Add nav buttons
+  const nav = document.createElement('div');
+  nav.className = 'nav';
+  if (idx > 0) {
+    const b = document.createElement('button');
+    b.className = 'prev'; b.textContent = '← Back';
+    b.onclick = () => goToStep(idx-1);
+    nav.appendChild(b);
+  } else {
+    const b = document.createElement('button');
+    b.className = 'prev'; b.style.visibility = 'hidden';
+    nav.appendChild(b);
+  }
+  const next = document.createElement('button');
+  next.className = 'next';
+  next.textContent = idx < STEPS.length - 1 ? 'Continue →' : '🎉 Launch Shell';
+  next.onclick = () => { if (idx < STEPS.length - 1) goToStep(idx + 1); };
+  nav.appendChild(next);
+  panel.appendChild(nav);
+  
+  showRoom(step.room);
+}
+
+function goToStep(idx) {
+  currentStep = idx;
+  renderStep(idx);
+}
+
+// Mouse drag for 3D
+let pm = {x:0,y:0}, sph={theta:0,phi:0};
+renderer.domElement.addEventListener('mousedown',e=>{pm={x:e.clientX,y:e.clientY}});
+renderer.domElement.addEventListener('mousemove',e=>{
+  if(e.buttons!==1)return;
+  sph.theta-=(e.clientX-pm.x)*.005; sph.phi-=(e.clientY-pm.y)*.005;
+  sph.phi=Math.max(-1.4,Math.min(1.4,sph.phi));
+  pm={x:e.clientX,y:e.clientY};
+});
+
+function animate() {
+  requestAnimationFrame(animate);
+  cam.lookAt(Math.cos(sph.phi)*Math.sin(sph.theta),Math.sin(sph.phi),Math.cos(sph.phi)*Math.cos(sph.theta));
+  renderer.render(scene,cam);
+}
+
+window.addEventListener('resize',()=>{
+  cam.aspect=innerWidth/innerHeight; cam.updateProjectionMatrix();
+  renderer.setSize(innerWidth,innerHeight);
+});
+
+// Start
+document.getElementById('loading').classList.add('h');
+renderStep(0);
+animate();
+</script>
+</body>
+</html>
