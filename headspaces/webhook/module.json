@@ -1,0 +1,6 @@
+{
+  "name": "webhook",
+  "version": "0.1.0",
+  "desc": "Generic webhook receiver — inbound HTTP → PLATO tile",
+  "depends": []
+}
