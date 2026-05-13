@@ -1,0 +1,7 @@
+{
+  "name": "discord",
+  "version": "0.1.0",
+  "desc": "Discord bot connectivity — listen to channels, respond to commands",
+  "install": {"pip": "discord.py"},
+  "depends": ["plato-sdk"]
+}

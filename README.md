@@ -152,26 +152,68 @@ hw = detect()
 
 ---
 
-## Quick Start
+## Onboarding
 
 ```bash
-# 1. Clone the shell
 git clone https://github.com/SuperInstance/starter-shell.git
 cd starter-shell
-
-# 2. Set up your project
-python3 setup.py my-project
-
-# 3. Run the agent
-python3 agent.py
-
-# 4. Connect to the fleet
-pip install plato-sdk
-cargo install superinstance-keel
-
-# 5. Walk the boat
-open https://fleet.cocapn.ai/
+python3 onboarding.py
 ```
+
+The onboarding walks through:
+1. **Identity** — name your shell, claim it
+2. **Hardware detection** — what can this machine do?
+3. **PLATO connection** — join the fleet's knowledge graph
+4. **Module selection** — install what you need
+5. **Shell is live** — you're a fleet of one
+
+---
+
+## Quick Start (already onboarded)
+
+```bash
+python3 agent.py              # Run the agent loop
+python3 modules.py list       # See available modules
+python3 modules.py install keel  # Install fleet CLI
+python3 hardware.py           # Detect hardware
+python3 plato.py              # Connect to PLATO
+```
+
+## Headspaces (Drop-in Skills)
+
+Headspaces are skill modules that connect the shell to external services. They're designed to be composable and interchangeable — the same model as OpenClaw's skills, but ported to work directly with the starter shell.
+
+### Available Headspaces
+
+| Headspace | What it does | How to use |
+|-----------|-------------|------------|
+| `telegram` | Telegram bot — receive messages, reply, route to agents | Set `TELEGRAM_TOKEN`, run `python3 -c "import headspaces.telegram; headspaces.telegram.start()"` |
+| `discord` | Discord bot — listen to channels, respond to commands | Set `DISCORD_TOKEN`, same pattern |
+| `heartbeat` | Scheduled agent loop — checks hardware, syncs PLATO, files telemetry | Set `HEARTBEAT_INTERVAL`, runs in background |
+
+### Creating a Headspace
+
+Every headspace exposes three functions:
+
+```python
+def start(config): ...   # Start the service
+def stop(): ...           # Stop the service  
+def status(): ...          # Is it running?
+```
+
+Port any OpenClaw skill by wrapping it in this interface.
+
+## How to Hitch OpenClaw Innovations
+
+As OpenClaw's ecosystem improves, we port everything useful:
+
+1. **Skills → Headspaces** — OpenClaw skills become shell headspaces. The `start/stop/status` interface is the bridge.
+2. **Heartbeat → Shell Loop** — OpenClaw's proactive loop maps directly to the shell's HEARTBEAT.md
+3. **SOUL → Identity** — OpenClaw's identity system maps to SOUL.md, USER.md, AGENTS.md
+4. **PLATO → Memory** — OpenClaw's knowledge graph is the shell's memory. Same PLATO, same tiles.
+5. **Modules → Ecosystem** — OpenClaw's ecosystem modules map to the shell's modules/
+
+The architecture is designed so that any OpenClaw innovation can be refactored into the shell's interior (the agent side) or added as a headspace.
 
 ---
 

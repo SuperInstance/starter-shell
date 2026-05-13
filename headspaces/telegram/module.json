@@ -1,0 +1,7 @@
+{
+  "name": "telegram",
+  "version": "0.1.0",
+  "desc": "Telegram bot connectivity — receive messages, send replies, route to agents",
+  "install": {"pip": "python-telegram-bot"},
+  "depends": ["plato-sdk"]
+}

@@ -1,0 +1,6 @@
+{
+  "name": "heartbeat",
+  "version": "0.1.0",
+  "desc": "Scheduled agent loop — check hardware, sync PLATO, file telemetry",
+  "depends": []
+}
