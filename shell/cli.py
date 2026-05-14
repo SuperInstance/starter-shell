@@ -49,3 +49,18 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+def headspaces_cmd():
+    """Show all headspaces and their status."""
+    import headspaces as hs
+    spaces = hs.list_headspaces()
+    statuses = hs.status_all()
+    print(f"\n  Headspaces ({len(spaces)}):")
+    for s in spaces:
+        st = statuses.get(s, {})
+        run = '✅' if st.get('running') else '⬜'
+        mi = hs.module_info(s)
+        print(f"    {run} {s:15s} {mi.get('desc','')[:55]}")
+    print()
+
+# Register in CLI argument parser
