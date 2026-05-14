@@ -1,5 +1,5 @@
 {
-  "name": "flux-lsp",
+  "name": "flux_lsp",
   "version": "0.1.0",
   "desc": "Language Server Protocol for FLUX ISA v1.0/v3.0 — syntax highlighting, auto-completion, hover docs, go-to-definition, diagnostics for .fluxasm files",
   "depends": ["node >=18"],
