@@ -1,0 +1,6 @@
+{
+  "name": "slack",
+  "version": "0.1.0",
+  "desc": "Slack bot connectivity — listen to channels, respond to commands, file threads as PLATO tiles",
+  "depends": []
+}
