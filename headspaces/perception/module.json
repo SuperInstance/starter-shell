@@ -1,0 +1,6 @@
+{
+  "name": "perception",
+  "version": "0.1.0",
+  "desc": "Perception-action cycle: sense PLATO tiles, detect field gaps, file action tiles, re-perceive",
+  "depends": []
+}
